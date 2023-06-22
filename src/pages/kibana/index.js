@@ -1,38 +1,56 @@
-import { EuiFlexGroup, EuiFlexItem, EuiCard, EuiIcon } from '@elastic/eui';
+import { EuiFlexGroup, EuiFlexItem, EuiCard, EuiIcon, SearchProvider } from '@elastic/eui';
 import KibanaLayout from '../../layouts/kibana';
-
+import { useRouter } from 'next/router';
+import Connector from "../../services/APIConnector"
 const Index = () => {
-  return (
-    <KibanaLayout
-      template="empty"
-      pageHeader={{
-        pageTitle: 'Welcome',
-      }}>
-      <EuiFlexGroup gutterSize="l">
-        <EuiFlexItem>
-          <EuiCard
-            icon={<EuiIcon size="xxl" type="discoverApp" />}
-            title="Discover"
-            description="Example of a card's description. Stick to one or two sentences."
-          />
-        </EuiFlexItem>
-        <EuiFlexItem>
-          <EuiCard
-            icon={<EuiIcon size="xxl" type="dashboardApp" />}
-            title="Dashboards"
-            description="Example of a card's description. Stick to one or two sentences."
-          />
-        </EuiFlexItem>
+  const router = useRouter();
+  const handleClickDash = () => {
+    router.push('/kibana/dashboards');
+  }
 
-        <EuiFlexItem>
-          <EuiCard
-            icon={<EuiIcon size="xxl" type="gisApp" />}
-            title="Maps"
-            description="Example of a card's description. Stick to one or two sentences."
-          />
+  const handleClickDiscover = () => {
+    router.push('/kibana/discover');
+  }
+  const handleClickML = () => {
+    router.push('/kibana/ML');
+  }
+
+  return (
+    // <SearchProvider config = {searchConfig}>
+      <KibanaLayout
+        template="empty"
+        pageHeader={{
+          pageTitle: 'Welcome to Perceptor',
+        }}>
+        <EuiFlexGroup gutterSize="l">
+        <EuiFlexItem grow = {false}>
+            <EuiCard
+                icon = {<EuiIcon size ="xxl" type = "dashboardApp" />}
+                title = {"Dashboard"}
+                description = "Explore and Interogate the Data using various Visualizations."
+                onClick = {handleClickDash}
+            />
         </EuiFlexItem>
-      </EuiFlexGroup>
-    </KibanaLayout>
+        <EuiFlexItem grow = {false}>
+            <EuiCard
+                icon = {<EuiIcon size ="xxl" type = "discoverApp" />}
+                title = {"Discover"}
+                description = "Explore and Interogate the Data"
+                onClick = {handleClickDiscover}
+            />
+        </EuiFlexItem>
+        <EuiFlexItem grow = {false}>
+            <EuiCard
+                icon = {<EuiIcon size ="xxl" type = "machineLearningApp" />}
+                title = {"Machine Learning"}
+                description = "Analize the data utilizing ML"
+                onClick = {handleClickML}
+                isDisabled = {true}
+            />
+        </EuiFlexItem>
+        </EuiFlexGroup>
+      </KibanaLayout>
+    // </SearchProvider>
   );
 };
 

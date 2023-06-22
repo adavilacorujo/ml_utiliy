@@ -7,18 +7,23 @@ import {
   useEuiTheme,
   EuiToolTip,
   EuiIcon,
+  EuiButton,
 } from '@elastic/eui';
 import { imageLoader } from '../../lib/loader';
 import ThemeSwitcher from './theme_switcher';
 import { headerStyles } from './header.styles';
 import Logo from '../../../public/images/logo-eui.svg';
+import { useRouter } from 'next/router';
 
 const Header = () => {
   const { euiTheme } = useEuiTheme();
   const href = 'https://github.com/elastic/next-eui-starter';
   const label = 'EUI GitHub repo';
   const styles = headerStyles(euiTheme);
-
+  const router = useRouter();
+  const handleSignIn = () => {
+    router.push('/Log-In')
+  }
   return (
     <EuiHeader
       position="fixed"
@@ -35,7 +40,7 @@ const Header = () => {
                   loader={imageLoader}
                 />
                 <EuiTitle size="xxs" css={styles.title}>
-                  <span>Next.js EUI Starter</span>
+                  <span>Welcome to Perceptor</span>
                 </EuiTitle>
               </a>
             </Link>,
@@ -45,11 +50,13 @@ const Header = () => {
         {
           items: [
             <ThemeSwitcher key="theme-switcher" />,
-            <EuiToolTip content="Github" key="github">
-              <EuiHeaderSectionItemButton aria-label={label} href={href}>
-                <EuiIcon type="logoGithub" aria-hidden="true" />
-              </EuiHeaderSectionItemButton>
-            </EuiToolTip>,
+            <EuiButton 
+              color = 'ghost'
+              size = 's'
+              onClick={handleSignIn}
+            >
+              Sign In
+            </EuiButton>,
           ],
           borders: 'none',
         },

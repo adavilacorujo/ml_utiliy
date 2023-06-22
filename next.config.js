@@ -66,6 +66,15 @@ const nextConfig = {
     // EUI uses some libraries and features that don't work outside of a
     // browser by default. We need to configure the build so that these
     // features are either ignored or replaced with stub implementations.
+    // config.module.rules.push({
+    //   test: /\.png/,
+    //   use: [
+    //     // options.defaultLoaders.babel,
+    //     {
+    //       loader: 'file-loader'
+    //     }
+    //   ]
+    // })
     if (isServer) {
       config.externals = config.externals.map(eachExternal => {
         if (typeof eachExternal !== 'function') {
