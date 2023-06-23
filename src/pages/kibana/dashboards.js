@@ -1,7 +1,12 @@
 import Link from 'next/link';
-import { EuiLink, EuiText, EuiButton } from '@elastic/eui';
+import { EuiFlexGrid, EuiLink, EuiText, EuiButton, EuiSpacer, EuiFlexItem } from '@elastic/eui';
 import KibanaLayout from '../../layouts/kibana';
-
+import FiltersAndQueries from '../../components/Discovery/FiltersAndQueries';
+import TRSummary from '../../components/visualizations/Time_Record_Summary';
+import DUSummary from '../../components/Discovery/Duration_Unique_Summary';
+import SummaryTable from '../../components/visualizations/SummaryTable';
+import { PieChart } from '../../components/visualizations/PieCharts';
+import { DateHistogram } from '../../components/visualizations/Histrogram';
 const Discover = () => {
   return (
     <KibanaLayout
@@ -9,7 +14,7 @@ const Discover = () => {
         pageTitle: 'Dashboards',
         rightSideItems: [
           <EuiButton
-            color="primary"
+            color="success"
             fill
             onClick={() => {
               console.log('Create dashboard');
@@ -19,22 +24,33 @@ const Discover = () => {
           </EuiButton>,
         ],
       }}>
-      <EuiText>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a erat
-          sed arcu imperdiet eleifend eu vel ante. Nam dapibus lacus id
-          efficitur luctus. Nunc vitae viverra erat, at euismod metus. Nam nec
-          nulla ornare, aliquam arcu in, luctus diam. Phasellus convallis lorem
-          fringilla, dapibus lectus in, pretium dui. Pellentesque massa nulla,
-          tempus ut elit at, scelerisque commodo eros. Proin interdum libero
-          aliquam, volutpat justo ut, posuere nulla.
-        </p>
-        <Link href="/kibana/" passHref>
-          <EuiLink color="primary">Go to Kibana home</EuiLink>
-        </Link>
-      </EuiText>
+      <FiltersAndQueries />
+
+      <EuiSpacer />
+      <EuiSpacer />
+
+      <EuiFlexGrid columns = {3} gutterSize='m' >
+        <EuiFlexItem>
+        <TRSummary />
+        </EuiFlexItem>
+
+        <EuiFlexItem>
+        <DUSummary />
+        </EuiFlexItem>
+
+        <EuiFlexItem>
+        <SummaryTable/>
+        </EuiFlexItem>
+        <EuiFlexItem>
+        <PieChart />
+        </EuiFlexItem>
+        <EuiFlexItem>
+        <DateHistogram />
+        </EuiFlexItem>
+
+        
+      </EuiFlexGrid>
     </KibanaLayout>
   );
 };
-
 export default Discover;

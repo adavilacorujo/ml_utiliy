@@ -11,7 +11,7 @@ const Index = () => {
       <EuiFlexGroup gutterSize="l">
         <EuiFlexItem>
           <EuiCard
-            icon={<EuiIcon size="xxl" type="discoverApp" />}
+            icon={<EuiIcon size="xx1" type="discoverApp" />}
             title="Discover"
             description="Example of a card's description. Stick to one or two sentences."
           />

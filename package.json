@@ -32,10 +32,13 @@
     "url": "https://github.com/elastic/next-eui-starter/issues"
   },
   "dependencies": {
+    "@elastic/charts": "^58.2.0",
     "@elastic/eui": "^68.0.0",
     "@emotion/cache": "^11.10.3",
     "@emotion/react": "^11.10.4",
+    "@faker-js/faker": "^8.0.2",
     "core-js": "^3.25.1",
+    "moment-timezone": "^0.5.43",
     "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {
