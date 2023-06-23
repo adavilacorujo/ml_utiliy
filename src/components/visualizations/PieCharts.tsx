@@ -50,15 +50,13 @@ console.log(data)
               id={"Port Count"}
               data={data}
               layout={PartitionLayout.sunburst}
-              // valueFormatter={() => ''}
-              valueAccessor={(d: number) => Number(d.count)}
-              valueFormatter={(d: number) => `$${defaultPartitionValueFormatter(Math.round(d / 1000000000))}\u00A0Bn`}
+              valueAccessor={(d) => d.count}
               layers={[
                 {
-                  groupByRollup: (d: Datum) => d.sitc1,
-                  nodeLabel: (d: Datum) => d.port,
+                  groupByRollup: (d) => d.status,
                   shape: {
-                    fillColor: data => euiChartTheme.colors.vizColors['port'],
+                    fillColor: (d) =>
+                      euiChartTheme.colors.vizColors[d.],
                   },
                 },
               ]}
