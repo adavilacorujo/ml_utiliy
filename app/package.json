@@ -1,0 +1,74 @@
+{
+  "name": "perceptorg2",
+  "version": "0.1.0",
+  "private": true,
+  "keywords": [
+    "next",
+    "kibana",
+    "eui",
+    "elastic",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=12.22.0"
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "analyze": "ANALYZE=true yarn build",
+    "build": "yarn lint && rm -f public/themes/*.min.css && next build",
+    "build-docs": "yarn lint && bash scripts/update-docs.sh",
+    "dev": "next",
+    "lint": "tsc && next lint",
+    "start": "next start",
+    "test-docs": "yarn lint && bash scripts/test-docs.sh"
+  },
+  "dependencies": {
+    "@elastic/charts": "^59.1.0",
+    "@elastic/elasticsearch": "^7.12.0",
+    "@elastic/eui": "^62.0.0",
+    "@elastic/react-search-ui": "^1.20.2",
+    "@elastic/react-search-ui-views": "^1.20.2",
+    "@elastic/search-ui-elasticsearch-connector": "^1.20.2",
+    "@emotion/cache": "^11.10.3",
+    "@emotion/react": "^11.10.4",
+    "@faker-js/faker": "^8.0.2",
+    "axios": "^1.4.0",
+    "core-js": "^3.25.1",
+    "flat": "^5.0.2",
+    "moment-timezone": "^0.5.43",
+    "next-auth": "^4.22.1",
+    "react-chartjs-2": "^5.2.0",
+    "react-vega-lite": "^6.1.0",
+    "regenerator-runtime": "^0.13.9",
+    "vega": "^5.25.0",
+    "vega-lite": "^5.11.0"
+  },
+  "devDependencies": {
+    "@elastic/datemath": "^5.0.3",
+    "@emotion/babel-plugin": "^11.10.2",
+    "@next/bundle-analyzer": "^12.3.1",
+    "@types/node": "^16.11.10",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "copy-webpack-plugin": "^10.0.0",
+    "eslint": "<8.0.0",
+    "eslint-config-next": "12.0.4",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "7.28.0",
+    "glob": "^7.2.0",
+    "iniparser": "^1.0.5",
+    "moment": "^2.29.4",
+    "next": "^12.3.1",
+    "null-loader": "^4.0.1",
+    "prettier": "^2.5.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "sass": "^1.43.5",
+    "serve": "^13.0.2",
+    "typescript": "^4.4.9",
+    "typescript-plugin-css-modules": "^3.4.0"
+  },
+  "resolutions": {
+    "trim": "0.0.3"
+  }
+}
