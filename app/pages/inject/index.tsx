@@ -3,8 +3,8 @@ import {
   useGeneratedHtmlId,
 } from '@elastic/eui';
 import KibanaLayout from '../layouts/kibana';
-import { FormModal } from './modal';
-import Page from './page';
+import { FormModal } from '../../components/inject/interfaces/Modal';
+import { Page } from '../../components/inject/interfaces/Page';
 
 
 export default () => {
@@ -24,27 +24,24 @@ export default () => {
 
     const onSuperSelectChange = (value: string) => {
         setSuperSelectValue(value);
+        setDataType(value);
     };
     const onIndexSelectChange = (value: string) => {
       setIndexSelectValue(value);
       setIndex(value);  // Change parent components value
     };
 
-    const showModal = () => setIsModalVisible(true);
-    const modalFormId = useGeneratedHtmlId({ prefix: 'modalForm' });
-    const modalFormSwitchId = useGeneratedHtmlId({ prefix: 'modalFormSwitch' });
-
     // Use Effect to use localStorage
     useEffect(() => {
       let index = JSON.parse(localStorage.getItem('index-selected'));
       
-        setIndex(index || null);
-        setIndexList(JSON.parse(localStorage.getItem('index-list')) || []);
-        setDataType(JSON.parse(localStorage.getItem('data-type')) || '');
-        setStart(JSON.parse(localStorage.getItem('start-date')) || 'now-30m');
-        setEnd(JSON.parse(localStorage.getItem('start-date')) || 'now');
-        setSuperSelectValue(JSON.parse(localStorage.getItem('data-type')) || 'DNS');
-        setIndexSelectValue(JSON.parse(localStorage.getItem('index-selected')) || '');
+      setIndex(index || null);
+      setIndexList(JSON.parse(localStorage.getItem('index-list')) || []);
+      setDataType(JSON.parse(localStorage.getItem('data-type')) || '');
+      setStart(JSON.parse(localStorage.getItem('start-date')) || 'now-30m');
+      setEnd(JSON.parse(localStorage.getItem('end-date')) || 'now');
+      setSuperSelectValue(JSON.parse(localStorage.getItem('data-type')) || 'DNS');
+      setIndexSelectValue(JSON.parse(localStorage.getItem('index-selected')) || '');
 
         if (!index) setIsModalVisible(true);
 
@@ -53,8 +50,7 @@ export default () => {
 
 
     let modal = (
-      <FormModal 
-        isModalVisible={isModalVisible}
+      <FormModal
         indexList={indexList}
         setIsModalVisible={setIsModalVisible}
         setIndex={setIndex}

@@ -23,6 +23,8 @@
     "test-docs": "yarn lint && bash scripts/test-docs.sh"
   },
   "dependencies": {
+    "@mui/icons-material": "latest",
+    "@mui/material": "latest",
     "@elastic/charts": "^59.1.0",
     "@elastic/elasticsearch": "^7.12.0",
     "@elastic/eui": "^62.0.0",

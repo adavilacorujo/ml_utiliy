@@ -244,7 +244,7 @@ const CollapsibleNav = () => {
 
   return (
     <>
-      <EuiHeader key={useGeneratedHtmlId()}
+      <EuiHeader key={useGeneratedHtmlId({prefix: "collapsable_nav_header"})}
         theme="dark"
         position="fixed"
         sections={[
@@ -261,7 +261,7 @@ const CollapsibleNav = () => {
           },
           {
             items:[
-              <EuiBreadcrumbs breadcrumbs={breadcrumbs} key={useGeneratedHtmlId()}/>,
+              <EuiBreadcrumbs breadcrumbs={breadcrumbs} key={useGeneratedHtmlId({prefix: "collapsable_nav_breadcrumbs"})}/>,
             ]
           },
           {
@@ -272,13 +272,13 @@ const CollapsibleNav = () => {
         ]}
       />
 
-      <EuiHeader key={useGeneratedHtmlId()}
+      <EuiHeader key={useGeneratedHtmlId({prefix: "collapsable_nav_header2"})}
         position="fixed"
         sections={[
           {
             items: [leftSectionItems,
               <EuiHeaderSectionItemButton
-              key={useGeneratedHtmlId()}
+              key={useGeneratedHtmlId({prefix: "collapsable_nav_sectionitembutton"})}
               aria-label="Account menu">
               <EuiButtonIcon 
                 aria-label='menu'

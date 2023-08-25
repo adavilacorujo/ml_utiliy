@@ -54,7 +54,7 @@ const nextConfig = {
   },
 
   /**
-   * Next.js reports TypeScript errors by default. If you don't want to
+   * Next.js reports `TypeScript errors by default. If you don't want to
    * leverage this behavior and prefer something else instead, like your
    * editor's integration, you may want to disable it.
    */

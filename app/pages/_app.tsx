@@ -8,6 +8,7 @@ import { Global } from '@emotion/react';
 import Chrome from '../components/chrome';
 import { Theme } from '../components/theme';
 import { globalStyes } from './styles/global.styles';
+import React from 'react';
 
 /**
  * Next.js uses the App component to initialize pages. You can override it

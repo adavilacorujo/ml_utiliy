@@ -11,29 +11,40 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         
         const { Client } = require('@elastic/elasticsearch');
 
-        // Read data from file
-        const fs = require('fs');
-        let credJSON = JSON.parse(fs.readFileSync('./.creds.json', 'utf8'));
-        
-        const client = new Client({
-            node: credJSON.node,
-            auth: {
-                username: credJSON.username,
-                password: credJSON.password
-            }
-        })
+        // Read data from env
+        let client;
+        if (Number(process.env.SECURITY_FLAG) === 1) {
+            client = new Client({
+                node: `http://${process.env.ES_HOST}:9200`,
+            })
+        }
+        else {
+            client = new Client({
+                node: `http://${process.env.ES_HOST}:9200`,
+                auth: {
+                    username: process.env.ES_USERNAME,
+                    password: process.env.ES_PASSWORD
+                }
+            })
+        }
 
         await client.search({
             size: 0,
             index: body["index"],
             body: {
+                query: {
+                    bool : { filter: { term: { 'log.file.path.keyword' : body.dataType } } }
+                },
                 aggs: {
-                    dates: {
-                        auto_date_histogram:
+                    range: {
+                        date_range:
                         {
                           field: "@timestamp",
-                          buckets: 20,
-                          format: "yyyy-MM-dd H:m:s" 
+                          format: "yyyy-MM-dd H:m:s",
+                          ranges: [
+                            { to : body.startDate },
+                            { from: body.endDate  }
+                          ]
                         }
                     }
                   }
