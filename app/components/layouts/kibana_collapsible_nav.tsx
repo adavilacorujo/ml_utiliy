@@ -20,7 +20,6 @@ import find from 'lodash/find';
 import findIndex from 'lodash/findIndex';
 import { css } from '@emotion/react';
 import ThemeSwitcher from '../chrome/theme_switcher';
-import A29Logo from '../logos/A29Logo';
 import router from 'next/router';
 
 const pathPrefix = process.env.PATH_PREFIX;
@@ -64,7 +63,7 @@ const TopLinks: EuiPinnableListGroupItemProps[] = [
   },
 ];
 
-const PerceptorLinks: EuiPinnableListGroupItemProps[] = [
+const AppLinks: EuiPinnableListGroupItemProps[] = [
   { label: 'Models', href: `${pathPrefix}/models` }, //dashboard
   { label: 'Inject', href: `${pathPrefix}/inject` },  //discover page
 ];
@@ -201,7 +200,7 @@ const CollapsibleNav = () => {
           onToggle={(isOpen: boolean) => toggleAccordion(isOpen, 'Kibana')}>
           <EuiPinnableListGroup
             aria-label="Kibana" // A11y : EuiCollapsibleNavGroup can't correctly pass the `title` as the `aria-label` to the right HTML element, so it must be added manually
-            listItems={alterLinksWithCurrentState(PerceptorLinks)}
+            listItems={alterLinksWithCurrentState(AppLinks)}
             pinTitle={addLinkNameToPinTitle}
             onPinClick={addPin}
             maxWidth="none"
@@ -251,9 +250,8 @@ const CollapsibleNav = () => {
           {
             items: [
             <>
-              <A29Logo/>
               <EuiText color='ghost'>
-                <h1 style={{fontSize: '1em'}}>&nbsp;Perceptor</h1>
+                <h1 style={{fontSize: '1em'}}>&nbsp;ML Utility</h1>
               </EuiText>
             </>,
             ],
