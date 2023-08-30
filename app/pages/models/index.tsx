@@ -1,22 +1,67 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   EuiButton,
-  EuiButtonEmpty,
-  EuiForm,
-  EuiFormRow,
+  EuiGlobalToastList,
   EuiModal,
   EuiModalBody,
   EuiModalFooter,
   EuiModalHeader,
   EuiModalHeaderTitle,
-  EuiSuperSelect,
-  EuiText,
-  useGeneratedHtmlId,
 } from '@elastic/eui';
-import KibanaLayout from '../layouts/kibana';
-import router from 'next/router';
+import { VerifyElasticsearch } from '../../components/utils/VerifyElasticsearch';
+import KibanaLayout from '../../components/layouts/kibana';
+import { ModelPage } from '../../components/model/ModelPage';
+import AddElasticServer from '../../components/utils/AddElasticServer';
 
-export default () => {
+const Index = () => {
+  const [isESManagementVisible, setIsESManagementVisible] = useState(false);
+  const [toasts, setToasts] = useState([]);
+
+  const removeToast = removedToast => {
+    setToasts(toasts.filter(toast => toast.id !== removedToast.id));
+  };
+
+  // Use Effect to use localStorage
+  useEffect(() => {
+
+    VerifyElasticsearch()
+    .then((result) => {
+      if (result != true) {
+        setIsESManagementVisible(true);
+      }
+    })
+    }, []);
+
+  let esModal = (
+    <>
+      <EuiModal onClose={() => setIsESManagementVisible(false)} initialFocus="[name=popswitch]" style={{ width: 1200, height: 550 }}>
+      <EuiGlobalToastList
+        toasts={toasts}
+        dismissToast={removeToast}
+        toastLifeTimeMs={6000}
+      />
+      <EuiModalHeader>
+        <EuiModalHeaderTitle>No Elasticsearch server connection!</EuiModalHeaderTitle>
+      </EuiModalHeader>  
+      <EuiModalBody>
+
+        <AddElasticServer 
+          setToasts={setToasts} 
+        />
+
+      </EuiModalBody>
+      <EuiModalFooter>
+        <EuiButton type="submit" onClick={() => setIsESManagementVisible(false)}>
+          Exit
+        </EuiButton>
+      </EuiModalFooter>
+      </EuiModal>
+    </>
+  )
+
+  let page = (
+    <ModelPage />
+  )
 
     return (
     <KibanaLayout
@@ -25,21 +70,9 @@ export default () => {
         rightSideItems: [
         ]
       }}>
-    <EuiModal onClose={function (event?: React.KeyboardEvent<HTMLDivElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-              throw new Error('Function not implemented.');
-          }}>
-        <EuiModalHeader>
-          <EuiModalHeaderTitle>Oops! No model created</EuiModalHeaderTitle>
-        </EuiModalHeader>
-
-        <EuiModalBody>Head on over to the Inject page to create a model.</EuiModalBody>
-
-        <EuiModalFooter >
-          <EuiButton onClick={() =>  router.push('/inject')} fill>
-            Inject
-          </EuiButton>
-        </EuiModalFooter>
-      </EuiModal>
+      { isESManagementVisible ? esModal : page }
     </KibanaLayout>
   )
 };
+
+export default Index;

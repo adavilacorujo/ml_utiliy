@@ -3,7 +3,15 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
+        let body;
+        try {
+            body = JSON.parse(req.body);
+        } catch {
+            body = req.body;
+        }
+
         const { Client } = require('@elastic/elasticsearch');
+
 
         // Read data from env
         let client;
@@ -23,11 +31,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         await client.indices.getMapping({
-            index: req.body["index"]
+            index: body["index"]
         })
         .then((response) => {
             return res.status(200).json({
-                hist : response.body[req.body["index"]].mappings
+                hist : response.body[body["index"]].mappings
             })
         })
         .catch((res_error) => {

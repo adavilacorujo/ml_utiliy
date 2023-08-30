@@ -1,13 +1,23 @@
 import { useEffect, useState } from 'react';
 import {
+  EuiButton,
+  EuiFlexGroup,
+  EuiGlobalToastList,
+  EuiModal,
+  EuiModalBody,
+  EuiModalFooter,
+  EuiModalHeader,
+  EuiModalHeaderTitle,
   useGeneratedHtmlId,
 } from '@elastic/eui';
-import KibanaLayout from '../layouts/kibana';
-import { FormModal } from '../../components/inject/interfaces/Modal';
-import { Page } from '../../components/inject/interfaces/Page';
+import KibanaLayout from '../../components/layouts/kibana';
+import { FormModal } from '../../components/inject/interfaces/InjectModal';
+import { Page } from '../../components/inject/InjectPage';
+import { VerifyElasticsearch } from '../../components/utils/VerifyElasticsearch';
+import AddElasticServer from '../../components/utils/AddElasticServer';
 
 
-export default () => {
+const Index = () => {
 
     // state variables
     const [index, setIndex] = useState(null);
@@ -15,6 +25,9 @@ export default () => {
     const [dataType, setDataType] = useState('');
     const [startDate, setStart] = useState('now-30m');
     const [endDate, setEnd] = useState('now');
+    const [isESManagementVisible, setIsESManagementVisible] = useState(false);
+    const [toasts, setToasts] = useState([]);
+    
 
     // modal
     const [superSelectvalue, setSuperSelectValue] = useState('DNS');
@@ -30,9 +43,24 @@ export default () => {
       setIndexSelectValue(value);
       setIndex(value);  // Change parent components value
     };
+    const removeToast = removedToast => {
+      setToasts(toasts.filter(toast => toast.id !== removedToast.id));
+    };
 
     // Use Effect to use localStorage
     useEffect(() => {
+
+      VerifyElasticsearch()
+      .then((result) => {
+        if (result != true) {
+          setIsESManagementVisible(true);
+        }
+        else {
+          setIsESManagementVisible(false);
+        }
+      })
+
+      
       let index = JSON.parse(localStorage.getItem('index-selected'));
       
       setIndex(index || null);
@@ -43,7 +71,7 @@ export default () => {
       setSuperSelectValue(JSON.parse(localStorage.getItem('data-type')) || 'DNS');
       setIndexSelectValue(JSON.parse(localStorage.getItem('index-selected')) || '');
 
-        if (!index) setIsModalVisible(true);
+      if (!index) setIsModalVisible(true);
 
      }, []);
 
@@ -63,6 +91,33 @@ export default () => {
       />
     );
 
+    let esModal = (
+      <>
+        <EuiModal onClose={() => setIsESManagementVisible(false)} initialFocus="[name=popswitch]" style={{ width: 1200, height: 550 }}>
+        <EuiGlobalToastList
+          toasts={toasts}
+          dismissToast={removeToast}
+          toastLifeTimeMs={6000}
+        />
+        <EuiModalHeader>
+          <EuiModalHeaderTitle>No Elasticsearch server connection!</EuiModalHeaderTitle>
+        </EuiModalHeader>  
+        <EuiModalBody>
+  
+          <AddElasticServer 
+            setToasts={setToasts} 
+          />
+  
+        </EuiModalBody>
+        <EuiModalFooter>
+          <EuiButton type="submit" onClick={() => setIsESManagementVisible(false)}>
+            Exit
+          </EuiButton>
+        </EuiModalFooter>
+        </EuiModal>
+      </>
+    )
+
     let page = ( 
       <Page
         indexList={indexList}
@@ -79,7 +134,6 @@ export default () => {
       />
     )
 
-
     return (
     <KibanaLayout
       pageHeader={{
@@ -88,8 +142,10 @@ export default () => {
         ]
       }}
       >
-        {isModalVisible ? modal: page} 
+        { isESManagementVisible ? esModal : isModalVisible ? modal: page }
 
     </KibanaLayout>
   )
 };
+
+export default Index;

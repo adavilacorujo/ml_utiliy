@@ -10,8 +10,8 @@ import {
   EuiSuperSelect,
   EuiText,
 } from '@elastic/eui';
-import KibanaLayout from './layouts/kibana';
-import VerifyElasticsearch from '../components/utils/VerifyElasticsearch';
+import KibanaLayout from '../components/layouts/kibana';
+import { VerifyElasticsearch } from '../components/utils/VerifyElasticsearch';
 import AddElasticServer from '../components/utils/AddElasticServer';
 
 const superSelectOptions = [
@@ -54,7 +54,7 @@ const superSelectOptions = [
 ];
 
 
-export default () => {
+const Index = () => {
   const [superSelectvalue, setSuperSelectValue] = useState('option_one');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [toasts, setToasts] = useState([]);
@@ -132,3 +132,5 @@ export default () => {
     </KibanaLayout>
   )
 };
+
+export default Index;

@@ -19,8 +19,8 @@ import {
 import find from 'lodash/find';
 import findIndex from 'lodash/findIndex';
 import { css } from '@emotion/react';
-import ThemeSwitcher from '../../components/chrome/theme_switcher';
-import A29Logo from '../../components/logos/A29Logo';
+import ThemeSwitcher from '../chrome/theme_switcher';
+import A29Logo from '../logos/A29Logo';
 import router from 'next/router';
 
 const pathPrefix = process.env.PATH_PREFIX;
